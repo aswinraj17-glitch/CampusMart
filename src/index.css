@@ -3,24 +3,24 @@
 :root {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   
-  /* Color Palette - Premium Dark Theme */
-  --bg-main: #0a0813;
-  --bg-gradient: radial-gradient(circle at 50% 0%, #1a1535 0%, #0a0813 70%);
-  --card-bg: rgba(255, 255, 255, 0.03);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --card-hover-bg: rgba(255, 255, 255, 0.06);
-  --card-hover-border: rgba(255, 255, 255, 0.15);
+  /* Color Palette - Premium Beige & Charcoal Warm Theme */
+  --bg-main: #262626; /* Charcoal dominant background */
+  --bg-gradient: radial-gradient(circle at 50% 0%, #3D3D3D 0%, #262626 70%); /* Charcoal & Dark Gray gradient */
+  --card-bg: rgba(241, 228, 206, 0.04); /* Beige tint for glass */
+  --card-border: rgba(241, 228, 206, 0.1);
+  --card-hover-bg: rgba(241, 228, 206, 0.08);
+  --card-hover-border: rgba(241, 228, 206, 0.2);
   
-  --text-primary: #f3f4f6;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  --text-primary: #FFFFFF; /* Crisp White text */
+  --text-secondary: #F1E4CE; /* Warm Beige text */
+  --text-muted: rgba(241, 228, 206, 0.6);
   
-  /* Accent Gradients */
-  --accent-primary: #8b5cf6; /* Violet */
-  --accent-secondary: #06b6d4; /* Cyan */
-  --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
-  --gradient-accent-hover: linear-gradient(135deg, #a78bfa 0%, #22d3ee 100%);
-  --glow-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+  /* Highlight Accents */
+  --accent-primary: #FF7263; /* Coral */
+  --accent-secondary: #FFB6A3; /* Peach */
+  --gradient-accent: linear-gradient(135deg, #FF7263 0%, #FFB6A3 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #FF8376 0%, #FFC1B1 100%);
+  --glow-shadow: 0 0 20px rgba(255, 114, 99, 0.25);
   
   font-family: var(--font-sans);
   color-scheme: dark;

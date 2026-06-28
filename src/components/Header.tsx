@@ -42,7 +42,10 @@ export const Header: React.FC = () => {
                   Admin Panel
                 </Link>
               )}
-              <Link to="/user-dashboard" className={`nav-link ${isActive('/user-dashboard') ? 'active' : ''}`}>
+              <Link to="/user-dashboard?tab=orders" className={`nav-link ${location.search.includes('tab=orders') ? 'active' : ''}`}>
+                My Orders
+              </Link>
+              <Link to="/user-dashboard" className={`nav-link ${isActive('/user-dashboard') && !location.search.includes('tab=orders') ? 'active' : ''}`}>
                 My Dashboard
               </Link>
               <button 
