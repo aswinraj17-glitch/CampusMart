@@ -3,27 +3,28 @@
 :root {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   
-  /* Color Palette - Premium Beige & Charcoal Warm Theme */
-  --bg-main: #262626; /* Charcoal dominant background */
-  --bg-gradient: radial-gradient(circle at 50% 0%, #3D3D3D 0%, #262626 70%); /* Charcoal & Dark Gray gradient */
-  --card-bg: rgba(241, 228, 206, 0.04); /* Beige tint for glass */
-  --card-border: rgba(241, 228, 206, 0.1);
-  --card-hover-bg: rgba(241, 228, 206, 0.08);
-  --card-hover-border: rgba(241, 228, 206, 0.2);
+  /* Color Palette - Soft Cream & Pastel Light Theme */
+  --bg-main: #FCFAF6; /* Soft Cream background */
+  --bg-gradient: linear-gradient(135deg, #FCFAF6 0%, #F5F1E9 100%);
+  --card-bg: rgba(255, 255, 255, 0.75); /* Crisp White frosted glass */
+  --card-border: rgba(183, 164, 227, 0.22); /* Lavender accent border */
+  --card-hover-bg: rgba(255, 255, 255, 0.9);
+  --card-hover-border: rgba(183, 164, 227, 0.45);
   
-  --text-primary: #FFFFFF; /* Crisp White text */
-  --text-secondary: #F1E4CE; /* Warm Beige text */
-  --text-muted: rgba(241, 228, 206, 0.6);
+  --text-primary: #332B40; /* Dark Charcoal Lavender for maximum legibility */
+  --text-secondary: #584F66; /* Muted Dark Lavender */
+  --text-muted: #847A94;
   
-  /* Highlight Accents */
-  --accent-primary: #FF7263; /* Coral */
-  --accent-secondary: #FFB6A3; /* Peach */
-  --gradient-accent: linear-gradient(135deg, #FF7263 0%, #FFB6A3 100%);
-  --gradient-accent-hover: linear-gradient(135deg, #FF8376 0%, #FFC1B1 100%);
-  --glow-shadow: 0 0 20px rgba(255, 114, 99, 0.25);
+  /* Soft Pastel Accents (Text-readable contrast) */
+  --accent-primary: #8C73C5; /* Pastel Lavender */
+  --accent-secondary: #2C9E90; /* Pastel Light Aqua */
+  --accent-tertiary: #D65A81; /* Pastel Soft Pink */
+  --gradient-accent: linear-gradient(135deg, #D65A81 0%, #8C73C5 50%, #2C9E90 100%); /* Pink to Lavender to Aqua */
+  --gradient-accent-hover: linear-gradient(135deg, #E2799A 0%, #A38EDA 50%, #43BCAE 100%);
+  --glow-shadow: 0 8px 25px rgba(140, 115, 197, 0.18);
   
   font-family: var(--font-sans);
-  color-scheme: dark;
+  color-scheme: light;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -64,11 +65,11 @@ body {
   background: var(--bg-main);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(140, 115, 197, 0.25);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(140, 115, 197, 0.4);
 }
 
 /* App Layout & Content Wrapper */
