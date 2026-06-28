@@ -22,6 +22,17 @@ export default function Signup() {
   const navigate = useNavigate();
   const { signUp } = useAuth();
 
+  const handleIdCardUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setIdCardUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -301,13 +312,12 @@ export default function Signup() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                College ID Card Image Link
+                Upload College ID Card
               </label>
               <input
-                type="text"
-                placeholder="e.g. Paste image URL or upload dummy link"
-                value={idCardUrl}
-                onChange={e => setIdCardUrl(e.target.value)}
+                type="file"
+                accept="image/*"
+                onChange={handleIdCardUpload}
                 required
                 style={{
                   width: '100%',
@@ -319,6 +329,11 @@ export default function Signup() {
                   outline: 'none'
                 }}
               />
+              {idCardUrl && (
+                <div style={{ marginTop: '0.5rem', width: '120px', height: '80px', borderRadius: '6px', overflow: 'hidden', border: '1px solid var(--card-border)' }}>
+                  <img src={idCardUrl} alt="ID preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+              )}
             </div>
           </div>
 

@@ -128,10 +128,15 @@ async function main() {
   await prisma.product.createMany({
     data: [
       {
-        name: 'HP Pavilion Laptop',
-        description: 'Intel i5, 8GB RAM, 256GB SSD. Good condition. Perfect for coding assignments.',
-        price: 28000.00,
-        imageUrl: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500',
+        name: 'Apple MacBook Air M2 Laptop',
+        description: 'Intel i5 / Apple M2 comparable, 8GB RAM, 256GB SSD storage. Space Grey. 1 year old, zero scratches. Perfect for coding, department assignments, and ML labs.',
+        price: 68000.00,
+        imageUrl: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=500',
+        imagesJson: JSON.stringify([
+          'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=500',
+          'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500',
+          'https://images.unsplash.com/photo-1611186871081-0f2c25670868?w=500'
+        ]),
         condition: 'Used',
         collegeName: 'Anna University',
         contactDetails: 'Rahul - 8765432109',
@@ -142,10 +147,14 @@ async function main() {
         sellerId: seller.id,
       },
       {
-        name: 'Introduction to Algorithms (CLRS)',
-        description: '3rd Edition, paperback. Essential core textbook for Computer Science. Donating to needy juniors.',
+        name: 'Introduction to Algorithms (CLRS) 4th Ed',
+        description: '4th Edition core textbook for computer science. paperback. Great for learning Data Structures and Algorithms. Donating for free to any junior who is taking the DSA course.',
         price: 0.00,
-        imageUrl: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=500',
+        imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500',
+        imagesJson: JSON.stringify([
+          'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500',
+          'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=500'
+        ]),
         condition: 'Used',
         collegeName: 'Anna University',
         contactDetails: 'Rahul - 8765432109',
@@ -156,10 +165,13 @@ async function main() {
         sellerId: seller.id,
       },
       {
-        name: 'Casio fx-991EX Classwiz Calculator',
-        description: 'Scientific calculator. Perfect condition. Looking to exchange for standard ECE lab components.',
-        price: 0.00,
+        name: 'Casio fx-991EX Scientific Calculator',
+        description: 'Scientific calculator. Perfect condition. Battery replaced last month. Looking to sell or exchange for 1st-semester books.',
+        price: 950.00,
         imageUrl: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500',
+        imagesJson: JSON.stringify([
+          'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500'
+        ]),
         condition: 'Used',
         collegeName: 'Anna University',
         contactDetails: 'Rahul - 8765432109',
@@ -170,23 +182,45 @@ async function main() {
         sellerId: seller.id,
       },
       {
-        name: 'Campus Winter Hoodie',
-        description: 'Premium blue campus hoodie. Size L. Sell or Swap for tech accessories.',
-        price: 1200.00,
-        imageUrl: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500',
-        condition: 'New',
-        collegeName: 'IIT Madras',
+        name: 'Sony WH-1000XM4 Noise Cancelling Headphones',
+        description: 'Active Noise Cancelling headphones. Perfect for studying in noisy hostel blocks. Excellent condition. 30 hours battery backup.',
+        price: 11500.00,
+        imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500',
+        imagesJson: JSON.stringify([
+          'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500',
+          'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500'
+        ]),
+        condition: 'Used',
+        collegeName: 'Anna University',
         contactDetails: 'Rahul - 8765432109',
         listingType: 'SellOrExchange',
-        categoryId: apparel.id,
+        categoryId: electronics.id,
         sellerId: seller.id,
       },
       {
-        name: 'Chemistry Lab Coat',
-        description: 'Standard white lab coat, size M. Used for 1 semester. Free donation for biotechnology/chemistry freshmen.',
+        name: 'Engineering Graphics Mini-Drafter & Board',
+        description: 'Wooden drawing board with mini-drafter. Essential for first-year engineering drawing classes.',
+        price: 750.00,
+        imageUrl: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=500',
+        imagesJson: JSON.stringify([
+          'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=500'
+        ]),
+        condition: 'Used',
+        collegeName: 'Anna University',
+        contactDetails: 'Rahul - 8765432109',
+        listingType: 'Sell',
+        categoryId: stationery.id,
+        sellerId: seller.id,
+      },
+      {
+        name: 'Standard White Lab Coat',
+        description: 'Standard white chemistry/biotech lab coat, size L. Free donation for incoming biotechnology freshmen.',
         price: 0.00,
         imageUrl: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=500',
-        condition: 'Used',
+        imagesJson: JSON.stringify([
+          'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=500'
+        ]),
+        condition: 'New',
         collegeName: 'PSG Tech',
         contactDetails: 'Rahul - 8765432109',
         listingType: 'Donate',
@@ -196,17 +230,20 @@ async function main() {
         sellerId: seller.id,
       },
       {
-        name: 'Spiral Bound Ruled Notebooks (Pack of 5)',
-        description: 'Unused spirals, perfect for class notes.',
-        price: 350.00,
-        imageUrl: 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=500',
-        condition: 'New',
-        collegeName: 'Anna University',
+        name: 'Hero Kyoto 26T Single Speed Mountain Bicycle',
+        description: 'Durable single speed bicycle. Perfect for riding daily between hostel blocks, campus library, and department buildings.',
+        price: 2900.00,
+        imageUrl: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=500',
+        imagesJson: JSON.stringify([
+          'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=500'
+        ]),
+        condition: 'Used',
+        collegeName: 'IIT Madras',
         contactDetails: 'Rahul - 8765432109',
         listingType: 'Sell',
-        categoryId: stationery.id,
+        categoryId: sports.id,
         sellerId: seller.id,
-      },
+      }
     ],
   });
 
