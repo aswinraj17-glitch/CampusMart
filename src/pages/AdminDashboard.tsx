@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 
 export default function AdminDashboard() {
   const { token, user } = useAuth();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   // Tab state
   const [activeTab, setActiveTab] = useState('overview');
@@ -42,7 +44,7 @@ export default function AdminDashboard() {
       return;
     }
     if (user && user.role !== 'admin') {
-      alert('Access Denied. You need Administrator privileges to access this panel.');
+      showToast('Access Denied. Administrator privileges required.', 'error');
       navigate('/');
     }
   }, [token, user, navigate]);
@@ -154,11 +156,11 @@ export default function AdminDashboard() {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
-        alert('User profile deleted');
+        showToast('User profile deleted');
         fetchUsers();
       } else {
         const err = await res.json();
-        alert(err.error || 'Failed to delete user');
+        showToast(err.error || 'Failed to delete user', 'error');
       }
     } catch (err) {
       console.error(err);
@@ -173,7 +175,7 @@ export default function AdminDashboard() {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
-        alert('Product listing removed');
+        showToast('Product listing removed');
         fetchProductsList();
       }
     } catch (err) {
@@ -193,7 +195,7 @@ export default function AdminDashboard() {
       });
       if (res.ok) {
         fetchOrdersList();
-        alert('Order shipment status updated');
+        showToast('Order shipment status updated');
       }
     } catch (err) {
       console.error(err);
@@ -219,11 +221,11 @@ export default function AdminDashboard() {
         body: JSON.stringify({ status, rejectReason })
       });
       if (res.ok) {
-        alert(`ID card verification status updated to: ${status}`);
+        showToast(`ID card verification status updated to: ${status}`);
         fetchVerificationsList();
       } else {
         const data = await res.json();
-        alert(data.error || 'Failed to update verification status');
+        showToast(data.error || 'Failed to update verification status', 'error');
       }
     } catch (err) {
       console.error(err);

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useProducts } from '../context/ProductContext';
+import { useToast } from '../context/ToastContext';
 
 const DEPARTMENTS = [
   // Engineering Streams
@@ -73,6 +74,7 @@ export default function SellerDashboard() {
   const { token, user } = useAuth();
   const navigate = useNavigate();
   const { categories, fetchCategories } = useProducts();
+  const { showToast } = useToast();
 
   // Tab State
   const [activeTab, setActiveTab] = useState('listings');
@@ -307,14 +309,14 @@ export default function SellerDashboard() {
       });
       if (res.ok) {
         loadListings();
-        alert('Product deleted successfully');
+        showToast('Product deleted successfully');
       } else {
         const data = await res.json();
-        alert(data.error || 'Failed to delete product');
+        showToast(data.error || 'Failed to delete product', 'error');
       }
     } catch (err) {
       console.error(err);
-      alert('Delete failed');
+      showToast('Delete failed', 'error');
     }
   };
 
@@ -331,14 +333,14 @@ export default function SellerDashboard() {
       });
       if (res.ok) {
         loadOrders();
-        alert(`Order status updated to: ${status}`);
+        showToast(`Order status updated to: ${status}`);
       } else {
         const data = await res.json();
-        alert(data.error || 'Failed to update order status');
+        showToast(data.error || 'Failed to update order status', 'error');
       }
     } catch (err) {
       console.error('Update status error:', err);
-      alert('Update failed');
+      showToast('Update failed', 'error');
     }
   };
 

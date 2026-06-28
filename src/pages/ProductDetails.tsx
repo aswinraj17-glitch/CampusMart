@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 
 export default function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { token, user } = useAuth();
   const { addToCart } = useCart();
+  const { showToast } = useToast();
 
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -152,7 +154,7 @@ export default function ProductDetails() {
       if (res.ok) {
         const data = await res.json();
         setIsWishlisted(data.wishlisted);
-        alert(data.message);
+        showToast(data.message);
       }
     } catch (err) {
       console.error(err);
@@ -185,11 +187,11 @@ export default function ProductDetails() {
         navigate('/user-dashboard?tab=chat');
       } else {
         const errData = await res.json();
-        alert(errData.error || 'Failed to start chat conversation');
+        showToast(errData.error || 'Failed to start chat conversation', 'error');
       }
     } catch (err) {
       console.error(err);
-      alert('Error initializing chat thread');
+      showToast('Error initializing chat thread', 'error');
     } finally {
       setChatLoading(false);
     }
@@ -206,7 +208,7 @@ export default function ProductDetails() {
 
   const handleProposeSwap = async () => {
     if (!selectedMyProductId) {
-      alert('Please select one of your products to swap.');
+      showToast('Please select one of your products to swap.', 'error');
       return;
     }
     setSwapSubmitting(true);
@@ -225,14 +227,14 @@ export default function ProductDetails() {
       });
       const data = await res.json();
       if (res.ok) {
-        alert('Exchange proposal sent successfully!');
+        showToast('Exchange proposal sent successfully!');
         setShowSwapModal(false);
       } else {
-        alert(data.error || 'Failed to send swap proposal');
+        showToast(data.error || 'Failed to send swap proposal', 'error');
       }
     } catch (err) {
       console.error(err);
-      alert('Network error sending swap proposal');
+      showToast('Network error sending swap proposal', 'error');
     } finally {
       setSwapSubmitting(false);
     }
@@ -241,7 +243,7 @@ export default function ProductDetails() {
   const handleAddToCart = () => {
     if (!product) return;
     addToCart(product);
-    alert(`Added "${product.name}" to your cart!`);
+    showToast(`Added "${product.name}" to your cart! 🛒`);
   };
 
   const handleBuyNow = () => {
@@ -276,7 +278,7 @@ export default function ProductDetails() {
       setComment('');
       setRating(5);
       fetchProductDetails();
-      alert('Review submitted successfully!');
+      showToast('Review submitted successfully!');
     } catch (err: any) {
       setReviewError(err.message || 'Failed to submit review');
     } finally {
@@ -440,7 +442,7 @@ export default function ProductDetails() {
             {isDonation && product.sellerId !== user?.id && (
               <button
                 onClick={() => {
-                  alert('Thank you for claiming! Order placed under Donation category. The donor will coordinate pickup details with you.');
+                  showToast('Thank you for claiming! Order placed under Donation category.');
                   handleBuyNow();
                 }}
                 className="btn btn-primary"

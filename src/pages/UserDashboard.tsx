@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 
 export default function UserDashboard() {
   const { token, user, updateProfile, signOut, refreshSelf } = useAuth();
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const location = useLocation();
 
   // Tab State
@@ -157,11 +159,11 @@ export default function UserDashboard() {
         body: JSON.stringify({ status })
       });
       if (res.ok) {
-        alert(`Exchange request ${status.toLowerCase()} successfully!`);
+        showToast(`Exchange request ${status.toLowerCase()} successfully!`);
         loadSwapRequests();
       } else {
         const err = await res.json();
-        alert(err.error || 'Failed to process response');
+        showToast(err.error || 'Failed to process response', 'error');
       }
     } catch (err) {
       console.error(err);

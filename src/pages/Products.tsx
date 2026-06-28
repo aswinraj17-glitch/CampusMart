@@ -3,6 +3,7 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 
 const DEPARTMENTS = [
   // Engineering Streams
@@ -74,6 +75,7 @@ export default function Products() {
   const { products, categories, fetchProducts, totalPages, currentPage, loading, error } = useProducts();
   const { addToCart } = useCart();
   const { user } = useAuth();
+  const { showToast } = useToast();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -592,26 +594,75 @@ export default function Products() {
                             🎓 {prod.department} {prod.semester ? `(Sem ${prod.semester})` : ''}
                           </p>
                         )}
-                        <div className="product-footer" style={{ marginTop: '1rem' }}>
-                          <span className="product-price">
-                            {prod.listingType === 'Donate' ? 'FREE 💚' : prod.listingType === 'Exchange' ? 'SWAP 🔄' : `₹${prod.price.toLocaleString('en-IN')}`}
-                          </span>
-                          <div style={{ display: 'flex', gap: '0.4rem' }}>
-                            {prod.listingType === 'Sell' && prod.sellerId !== user?.id && (
+                        <div style={{ marginTop: '0.8rem', borderTop: '1px solid var(--card-border)', paddingTop: '0.8rem', width: '100%' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
+                            <span className="product-price" style={{ fontSize: '1.15rem' }}>
+                              {prod.listingType === 'Donate' ? 'FREE 💚' : prod.listingType === 'Exchange' ? 'SWAP 🔄' : `₹${prod.price.toLocaleString('en-IN')}`}
+                            </span>
+                            {prod.sellerId === user?.id && (
+                              <span style={{ fontSize: '0.72rem', background: 'rgba(255,255,255,0.05)', color: 'var(--text-secondary)', padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--card-border)' }}>
+                                Your Listing 👤
+                              </span>
+                            )}
+                          </div>
+
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', width: '100%' }}>
+                            {/* Row 1: Add to Cart and Details side-by-side */}
+                            <div style={{ display: 'flex', gap: '0.4rem', width: '100%' }}>
                               <button
+                                disabled={prod.sellerId === user?.id}
                                 onClick={() => {
                                   addToCart(prod);
-                                  alert('Item added to cart!');
+                                  showToast(`"${prod.name}" added to cart! 🛒`);
                                 }}
                                 className="btn btn-secondary btn-sm"
-                                style={{ padding: '0.4rem 0.6rem' }}
+                                style={{ flex: 1, padding: '0.45rem', fontSize: '0.78rem', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem', cursor: prod.sellerId === user?.id ? 'not-allowed' : 'pointer', opacity: prod.sellerId === user?.id ? 0.5 : 1 }}
                               >
-                                🛒
+                                🛒 Add to Cart
                               </button>
+                              <Link
+                                to={`/product/${prod.id}`}
+                                className="btn btn-secondary btn-sm"
+                                style={{ flex: 1, padding: '0.45rem', fontSize: '0.78rem', fontWeight: 600, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem', textDecoration: 'none' }}
+                              >
+                                🔍 Details
+                              </Link>
+                            </div>
+
+                            {/* Row 2: Buy Now / Request / Swap */}
+                            {prod.sellerId !== user?.id && (
+                              prod.listingType === 'Donate' ? (
+                                <button
+                                  onClick={() => {
+                                    addToCart(prod);
+                                    navigate('/checkout');
+                                  }}
+                                  className="btn btn-primary btn-sm"
+                                  style={{ width: '100%', padding: '0.5rem', fontSize: '0.8rem', fontWeight: 700, background: '#10b981', boxShadow: '0 4px 10px rgba(16, 185, 129, 0.2)' }}
+                                >
+                                  💚 Request Free Donation
+                                </button>
+                              ) : prod.listingType === 'Exchange' ? (
+                                <Link
+                                  to={`/product/${prod.id}`}
+                                  className="btn btn-primary btn-sm"
+                                  style={{ width: '100%', padding: '0.5rem', fontSize: '0.8rem', fontWeight: 700, textAlign: 'center', background: '#f59e0b', textDecoration: 'none', display: 'block', color: '#000', boxShadow: '0 4px 10px rgba(245, 158, 11, 0.2)' }}
+                                >
+                                  🔄 Propose Swap / Exchange
+                                </Link>
+                              ) : (
+                                <button
+                                  onClick={() => {
+                                    addToCart(prod);
+                                    navigate('/checkout');
+                                  }}
+                                  className="btn btn-primary btn-sm"
+                                  style={{ width: '100%', padding: '0.5rem', fontSize: '0.8rem', fontWeight: 700 }}
+                                >
+                                  ⚡ Buy Now
+                                </button>
+                              )
                             )}
-                            <Link to={`/product/${prod.id}`} className="btn btn-primary btn-sm" style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}>
-                              Details
-                            </Link>
                           </div>
                         </div>
                       </div>

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 
 export default function Checkout() {
   const { cart, clearCart, cartTotal } = useCart();
   const { token, user } = useAuth();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   // Check if cart contains items from another college campus
   const isCrossCollege = cart.some(
@@ -127,7 +129,7 @@ export default function Checkout() {
 
   const handleConfirmUPIPayment = () => {
     if (upiPin.length < 4) {
-      alert('Please enter a valid 4-digit UPI PIN');
+      showToast('Please enter a valid 4-digit UPI PIN', 'error');
       return;
     }
     setUpiProcessing(true);
