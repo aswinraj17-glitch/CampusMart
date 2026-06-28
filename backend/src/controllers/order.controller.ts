@@ -100,7 +100,7 @@ export const createOrder = async (req: any, res: Response) => {
           orderId: order.id,
           paymentMethod: paymentMethod || 'COD',
           amount: total,
-          status: paymentMethod === 'Card' || paymentMethod === 'UPI' ? 'Completed' : 'Pending',
+          status: ['Card', 'UPI', 'GPay', 'PhonePe'].includes(paymentMethod) ? 'Completed' : 'Pending',
           transactionId: 'TXN-' + Math.floor(Math.random() * 1000000000)
         }
       });

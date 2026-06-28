@@ -327,9 +327,11 @@ export default function Checkout() {
                   outline: 'none'
                 }}
               >
-                <option value="COD">Cash on Hand / GPay at Handover Spot</option>
-                <option value="UPI">UPI Transfer (Simulated)</option>
-                <option value="Card">Credit/Debit Card (Simulated)</option>
+                <option value="COD">Cash on Hand / Cash on Delivery</option>
+                <option value="GPay">Google Pay (GPay) - Simulated</option>
+                <option value="PhonePe">PhonePe - Simulated</option>
+                <option value="UPI">Paytm / Standard UPI - Simulated</option>
+                <option value="Card">Credit/Debit Card - Simulated</option>
               </select>
             </div>
 
