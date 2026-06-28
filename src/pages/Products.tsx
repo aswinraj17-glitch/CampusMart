@@ -34,6 +34,9 @@ export default function Products() {
   const [deptFilter, setDeptFilter] = useState(initialDept);
   const [semesterFilter, setSemesterFilter] = useState(initialSem);
 
+  // My college only toggle
+  const [myCollegeOnly, setMyCollegeOnly] = useState(false);
+
   // Trigger search and fetch products on filter change
   useEffect(() => {
     const params: any = {
@@ -48,7 +51,14 @@ export default function Products() {
     if (maxPrice) params.maxPrice = maxPrice;
     if (condition !== 'All') params.condition = condition;
     if (listingType !== 'All') params.listingType = listingType;
-    if (collegeFilter !== 'All') params.collegeName = collegeFilter;
+    
+    // Prioritize myCollegeOnly toggle, otherwise fall back to college selector
+    if (myCollegeOnly && user?.verification?.collegeName) {
+      params.collegeName = user.verification.collegeName;
+    } else if (collegeFilter !== 'All') {
+      params.collegeName = collegeFilter;
+    }
+
     if (deptFilter.trim()) params.department = deptFilter;
     if (semesterFilter !== 'All') params.semester = semesterFilter;
 
@@ -69,6 +79,7 @@ export default function Products() {
     collegeFilter, 
     deptFilter, 
     semesterFilter, 
+    myCollegeOnly,
     user, 
     fetchProducts
   ]);
@@ -104,7 +115,13 @@ export default function Products() {
     if (maxPrice) params.maxPrice = maxPrice;
     if (condition !== 'All') params.condition = condition;
     if (listingType !== 'All') params.listingType = listingType;
-    if (collegeFilter !== 'All') params.collegeName = collegeFilter;
+    
+    if (myCollegeOnly && user?.verification?.collegeName) {
+      params.collegeName = user.verification.collegeName;
+    } else if (collegeFilter !== 'All') {
+      params.collegeName = collegeFilter;
+    }
+
     if (deptFilter.trim()) params.department = deptFilter;
     if (semesterFilter !== 'All') params.semester = semesterFilter;
     
@@ -126,6 +143,7 @@ export default function Products() {
     setCollegeFilter('All');
     setDeptFilter('');
     setSemesterFilter('All');
+    setMyCollegeOnly(false);
     navigate('/products');
   };
 
@@ -148,6 +166,21 @@ export default function Products() {
         {/* Filters Sidebar */}
         <aside className="glass" style={{ padding: '1.5rem', borderRadius: '12px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <h2 style={{ fontSize: '1.2rem', fontWeight: 700, borderBottom: '1px solid var(--card-border)', paddingBottom: '0.5rem' }}>Filters</h2>
+
+          {user?.verification?.collegeName && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'rgba(6, 182, 212, 0.05)', padding: '0.75rem', borderRadius: '8px', border: '1px solid rgba(6, 182, 212, 0.15)' }}>
+              <input
+                id="myCollegeToggle"
+                type="checkbox"
+                checked={myCollegeOnly}
+                onChange={(e) => setMyCollegeOnly(e.target.checked)}
+                style={{ cursor: 'pointer', width: '16px', height: '16px' }}
+              />
+              <label htmlFor="myCollegeToggle" style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-secondary)', cursor: 'pointer', userSelect: 'none' }}>
+                📍 My College Only
+              </label>
+            </div>
+          )}
 
           {/* Search bar */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
